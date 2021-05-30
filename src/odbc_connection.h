@@ -25,8 +25,8 @@ public:
       std::string encoding = "",
       bigint_map_t bigint_mapping = i64_to_integer64,
       long timeout = 0,
-      std::vector< int > attrs_before_key = {};,
-      std::vector< std::string > attrs_before_value = {};);
+      std::vector< int > attrs_before_key = {},
+      std::vector< std::string > attrs_before_value = {});
 
   std::shared_ptr<nanodbc::connection> connection() const;
 
