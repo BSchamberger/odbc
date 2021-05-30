@@ -44,7 +44,6 @@ odbc_connection::odbc_connection(
     Rcpp::stop("Error loading timezone_out (%s)", timezone_out);
   }
 
-  Rprintf("Creating a connection\n");
   try {
     c_ = std::make_shared<nanodbc::connection>(
       connection_string,
