@@ -40,10 +40,10 @@ OdbcConnection <- function(
 
   if (!is.null(attrs_before)) {
     attrs_before_key   <- as.integer(attrs_before["key"])
-    attrs_before_value <- as.integer(attrs_before["value"])
+    attrs_before_value <- as.character(attrs_before["value"])
   } else {
-    attrs_before_key   <- integer(0L)
-    attrs_before_value <- character(0L)
+    attrs_before_key   <- integer(1L)
+    attrs_before_value <- character(1L)
   }
 
   ptr <- odbc_connect(
