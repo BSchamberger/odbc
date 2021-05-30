@@ -24,6 +24,7 @@ OdbcConnection <- function(
   uid = NULL,
   pwd = NULL,
   dbms.name = NULL,
+  attrs_before = NULL,
   .connection_string = NULL) {
 
   args <- c(dsn = dsn, driver = driver, server = server, database = database, uid = uid, pwd = pwd, list(...))
@@ -37,7 +38,16 @@ OdbcConnection <- function(
     timeout <- 0
   }
 
-  ptr <- odbc_connect(connection_string, timezone = timezone, timezone_out = timezone_out, encoding = encoding, bigint = bigint, timeout = timeout)
+  ptr <- odbc_connect(
+    connection_string,
+    timezone = timezone,
+    timezone_out = timezone_out,
+    encoding = encoding,
+    bigint = bigint,
+    timeout = timeout,
+    attrs_before_key = attrs_before["key"],
+    attrs_before_value = attrs_before["value"]
+    )
   quote <- connection_quote(ptr)
 
   info <- connection_info(ptr)

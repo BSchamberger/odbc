@@ -1003,7 +1003,12 @@ public:
     /// \param timeout Seconds before connection timeout. Default is 0 indicating no timeout.
     /// \throws database_error
     /// \see connected(), connect()
-    connection(const string_type& connection_string, long timeout = 0);
+    connection(
+        const string_type& connection_string,
+        long timeout = 0,
+        const std::vector< int >& key = std::vector< int >(),
+        const std::vector< string_type>& value = std::vector< string_type >(),
+        const string_type& encoding = nullptr);
 
     /// \brief Automatically disconnects from the database and frees all associated resources.
     ///
@@ -1043,7 +1048,18 @@ public:
     /// \param timeout Seconds before connection timeout. Default is 0 indicating no timeout.
     /// \throws database_error
     /// \see connected()
-    void connect(const string_type& connection_string, long timeout = 0);
+    void connect(
+        const string_type& connection_string,
+        long timeout = 0,
+        const std::vector< int >& key = std::vector < int >(0),
+        const std::vector< string_type>& value = std::vector< string_type >(0),
+        const string_type& encoding = nullptr);
+
+    /// [TODO:] Documentation
+    void apply_preconn_attrs(
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        const string_type& encoding);
 
 #if !defined(NANODBC_DISABLE_ASYNC)
     /// \brief Initiate an asynchronous connection operation to the given data source.

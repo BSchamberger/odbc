@@ -24,7 +24,9 @@ public:
       std::string timezone_out = "UTC",
       std::string encoding = "",
       bigint_map_t bigint_mapping = i64_to_integer64,
-      long timeout = 0);
+      long timeout = 0,
+      std::vector< int > attrs_before_key = std::vector< int >(),
+      std::vector< std::string > attrs_before_value = std::vector< std::string >());
 
   std::shared_ptr<nanodbc::connection> connection() const;
 
@@ -41,6 +43,8 @@ public:
   cctz::time_zone timezone() const;
   std::string timezone_out_str() const;
   std::string encoding() const;
+  std::vector< int > attrs_before_key() const;
+  std::vector< std::string > attrs_before_value() const;
 
   bigint_map_t get_bigint_mapping() const;
 
@@ -53,5 +57,8 @@ private:
   std::string timezone_out_str_;
   std::string encoding_;
   bigint_map_t bigint_mapping_;
+  std::vector< int > attrs_before_key_;
+  std::vector< std::string > attrs_before_value_;
+
 };
 } // namespace odbc

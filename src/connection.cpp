@@ -52,7 +52,9 @@ connection_ptr odbc_connect(
     std::string const& timezone_out = "",
     std::string const& encoding = "",
     int bigint = 0,
-    long timeout = 0) {
+    long timeout = 0,
+    std::vector< int > const& attrs_before_key = std::vector< int >(0),
+    std::vector< std::string > const& attrs_before_value = std::vector< std::string >(0)) {
   return connection_ptr(
       new std::shared_ptr<odbc_connection>(new odbc_connection(
           connection_string,
@@ -60,7 +62,9 @@ connection_ptr odbc_connect(
           timezone_out,
           encoding,
           static_cast<bigint_map_t>(bigint),
-          timeout)));
+          timeout,
+          attrs_before_key,
+          attrs_before_value)));
 }
 
 std::string get_info_or_empty(connection_ptr const& p, short type) {

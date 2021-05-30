@@ -831,7 +831,13 @@ public:
         }
     }
 
-    connection_impl(const string_type& connection_string, long timeout)
+    connection_impl(
+        const string_type& connection_string,
+        long timeout,
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        const string_type& encoding = nullptr,
+         void* event_handle = nullptr)
         : env_(nullptr)
         , dbc_(nullptr)
         , connected_(false)
@@ -841,7 +847,7 @@ public:
         allocate();
         try
         {
-            connect(connection_string, timeout);
+            connect(connection_string, timeout, key, value, encoding);
         }
         catch (...)
         {
@@ -920,6 +926,30 @@ public:
     }
 #endif // !NANODBC_DISABLE_ASYNC && SQL_ATTR_ASYNC_DBC_EVENT
 
+
+    void apply_preconn_attrs(
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        const string_type& encoding = nullptr)
+    {
+        NANODBC_ASSERT(dbc_);
+
+        if (key.size() > 0) {
+            RETCODE rc;
+            for (std::size_t i = 0; i < key.size(); i++) {
+                NANODBC_CALL_RC(
+                    SQLSetConnectAttr,
+                    rc,
+                    dbc_,
+                    (SQLINTEGER) key[i],
+                    (NANODBC_SQLCHAR*)value[i].c_str(),
+                    0);
+               if (!success(rc))
+                   NANODBC_THROW_DATABASE_ERROR(dbc_, SQL_HANDLE_DBC);
+            }
+        }
+    }
+
     RETCODE connect(
         const string_type& dsn,
         const string_type& user,
@@ -975,7 +1005,13 @@ public:
     }
 
     RETCODE
-    connect(const string_type& connection_string, long timeout, void* event_handle = nullptr)
+    connect(
+        const string_type& connection_string,
+        long timeout,
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        const string_type& encoding,
+        void* event_handle = nullptr)
     {
 
         allocate_env_handle(env_);
@@ -1000,6 +1036,8 @@ public:
             if (!success(rc))
                 NANODBC_THROW_DATABASE_ERROR(dbc_, SQL_HANDLE_DBC);
         }
+
+        apply_preconn_attrs(key, value, encoding);
 
 #if !defined(NANODBC_DISABLE_ASYNC) && defined(SQL_ATTR_ASYNC_DBC_EVENT)
         if (event_handle != nullptr)
@@ -3596,8 +3634,13 @@ connection::connection(
 {
 }
 
-connection::connection(const string_type& connection_string, long timeout)
-    : impl_(new connection_impl(connection_string, timeout))
+connection::connection(
+    const string_type& connection_string,
+    long timeout,
+    const std::vector< int >& key,
+    const std::vector< string_type>& value,
+    const string_type& encoding)
+    : impl_(new connection_impl(connection_string, timeout, key, value, encoding))
 {
 }
 
@@ -3622,9 +3665,14 @@ void connection::connect(
     impl_->connect(dsn, user, pass, timeout);
 }
 
-void connection::connect(const string_type& connection_string, long timeout)
+void connection::connect(
+        const string_type& connection_string,
+        long timeout,
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        const string_type& encoding)
 {
-    impl_->connect(connection_string, timeout);
+    impl_->connect(connection_string, timeout, key, value, encoding);
 }
 
 #if !defined(NANODBC_DISABLE_ASYNC) && defined(SQL_ATTR_ASYNC_DBC_EVENT)
@@ -3641,9 +3689,12 @@ bool connection::async_connect(
 bool connection::async_connect(
     const string_type& connection_string,
     void* event_handle,
-    long timeout)
+    long timeout,
+    const std::vector< int >& key,
+    const std::vector< string_type>& value,
+    const string_type& encoding = nullptr)
 {
-    return impl_->connect(connection_string, timeout, event_handle) == SQL_STILL_EXECUTING;
+    return impl_->connect(connection_string, timeout, key, value, encoding, event_handle) == SQL_STILL_EXECUTING;
 }
 
 void connection::async_complete()

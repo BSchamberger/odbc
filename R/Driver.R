@@ -95,6 +95,7 @@ setMethod(
     uid = NULL,
     pwd = NULL,
     dbms.name = NULL,
+    attrs_before = NULL,
     .connection_string = NULL) {
 
     con <- OdbcConnection(
@@ -111,6 +112,7 @@ setMethod(
       uid = uid,
       pwd = pwd,
       dbms.name = dbms.name,
+      attrs_before = attrs_before,
       .connection_string = .connection_string)
 
     # perform the connection notification at the top level, to ensure that it's had

@@ -24,11 +24,15 @@ odbc_connection::odbc_connection(
     std::string timezone_out,
     std::string encoding,
     bigint_map_t bigint_mapping,
-    long timeout)
+    long timeout,
+    std::vector< int > attrs_before_key,
+    std::vector< std::string > attrs_before_value)
     : current_result_(nullptr),
       timezone_out_str_(timezone_out),
       encoding_(encoding),
-      bigint_mapping_(bigint_mapping) {
+      bigint_mapping_(bigint_mapping),
+      attrs_before_key_(attrs_before_key),
+      attrs_before_value_(attrs_before_value) {
 
   if (!cctz::load_time_zone(timezone, &timezone_)) {
     Rcpp::stop("Error loading time zone (%s)", timezone);
