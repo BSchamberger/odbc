@@ -48,13 +48,13 @@ OdbcConnection <- function(
 
   ptr <- odbc_connect(
     connection_string,
+    attrs_before_key = attrs_before_key,
+    attrs_before_value = attrs_before_value,
     timezone = timezone,
     timezone_out = timezone_out,
     encoding = encoding,
     bigint = bigint,
-    timeout = timeout,
-    attrs_before_key = attrs_before_key,
-    attrs_before_value = attrs_before_value
+    timeout = timeout
     )
   quote <- connection_quote(ptr)
 

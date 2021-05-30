@@ -1005,9 +1005,9 @@ public:
     /// \see connected(), connect()
     connection(
         const string_type& connection_string,
-        long timeout = 0,
-        const std::vector< int >& key = {},
-        const std::vector< string_type>& value = {});
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        long timeout = 0);
 
     /// \brief Automatically disconnects from the database and frees all associated resources.
     ///
@@ -1049,9 +1049,9 @@ public:
     /// \see connected()
     void connect(
         const string_type& connection_string,
-        long timeout = 0,
-        const std::vector< int >& key = {},
-        const std::vector< string_type>& value = {});
+        const std::vector< int >& key,
+        const std::vector< string_type>& value,
+        long timeout = 0);
 
     /// [TODO:] Documentation
     void apply_preconn_attrs(

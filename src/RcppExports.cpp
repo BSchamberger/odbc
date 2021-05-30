@@ -27,20 +27,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // odbc_connect
-connection_ptr odbc_connect(std::string const& connection_string, std::string const& timezone, std::string const& timezone_out, std::string const& encoding, int bigint, long timeout, std::vector< int > const& attrs_before_key, std::vector< std::string > const& attrs_before_value);
-RcppExport SEXP _odbc_odbc_connect(SEXP connection_stringSEXP, SEXP timezoneSEXP, SEXP timezone_outSEXP, SEXP encodingSEXP, SEXP bigintSEXP, SEXP timeoutSEXP, SEXP attrs_before_keySEXP, SEXP attrs_before_valueSEXP) {
+connection_ptr odbc_connect(std::string const& connection_string, std::vector< int > const& attrs_before_key, std::vector< std::string > const& attrs_before_value, std::string const& timezone, std::string const& timezone_out, std::string const& encoding, int bigint, long timeout);
+RcppExport SEXP _odbc_odbc_connect(SEXP connection_stringSEXP, SEXP attrs_before_keySEXP, SEXP attrs_before_valueSEXP, SEXP timezoneSEXP, SEXP timezone_outSEXP, SEXP encodingSEXP, SEXP bigintSEXP, SEXP timeoutSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string const& >::type connection_string(connection_stringSEXP);
+    Rcpp::traits::input_parameter< std::vector< int > const& >::type attrs_before_key(attrs_before_keySEXP);
+    Rcpp::traits::input_parameter< std::vector< std::string > const& >::type attrs_before_value(attrs_before_valueSEXP);
     Rcpp::traits::input_parameter< std::string const& >::type timezone(timezoneSEXP);
     Rcpp::traits::input_parameter< std::string const& >::type timezone_out(timezone_outSEXP);
     Rcpp::traits::input_parameter< std::string const& >::type encoding(encodingSEXP);
     Rcpp::traits::input_parameter< int >::type bigint(bigintSEXP);
     Rcpp::traits::input_parameter< long >::type timeout(timeoutSEXP);
-    Rcpp::traits::input_parameter< std::vector< int > const& >::type attrs_before_key(attrs_before_keySEXP);
-    Rcpp::traits::input_parameter< std::vector< std::string > const& >::type attrs_before_value(attrs_before_valueSEXP);
-    rcpp_result_gen = Rcpp::wrap(odbc_connect(connection_string, timezone, timezone_out, encoding, bigint, timeout, attrs_before_key, attrs_before_value));
+    rcpp_result_gen = Rcpp::wrap(odbc_connect(connection_string, attrs_before_key, attrs_before_value, timezone, timezone_out, encoding, bigint, timeout));
     return rcpp_result_gen;
 END_RCPP
 }

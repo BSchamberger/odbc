@@ -20,13 +20,13 @@ void odbc_connection::set_current_result(odbc_result* r) {
 
 odbc_connection::odbc_connection(
     std::string connection_string,
+    std::vector< int > attrs_before_key,
+    std::vector< std::string > attrs_before_value,
     std::string timezone,
     std::string timezone_out,
     std::string encoding,
     bigint_map_t bigint_mapping,
-    long timeout,
-    std::vector< int > attrs_before_key,
-    std::vector< std::string > attrs_before_value)
+    long timeout)
     : current_result_(nullptr),
       timezone_out_str_(timezone_out),
       encoding_(encoding),
@@ -44,8 +44,13 @@ odbc_connection::odbc_connection(
     Rcpp::stop("Error loading timezone_out (%s)", timezone_out);
   }
 
+  Rprintf("Creating a connection\n");
   try {
-    c_ = std::make_shared<nanodbc::connection>(connection_string, timeout);
+    c_ = std::make_shared<nanodbc::connection>(
+      connection_string,
+      attrs_before_key,
+      attrs_before_value,
+      timeout);
   } catch (const nanodbc::database_error& e) {
     throw Rcpp::exception(e.what(), FALSE);
   }
