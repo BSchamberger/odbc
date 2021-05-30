@@ -930,12 +930,12 @@ public:
         const std::vector< string_type>& value)
     {
         NANODBC_ASSERT(dbc_);
-        printf("Applying preconnection attributes\n");
+        printf("Applying %i preconnection attributes\n", key.size());
 
         if (key.size() > 0) {
-            printf("Got %i attributes\n", key.size());
             RETCODE rc;
             for (std::size_t i = 0; i < key.size(); i++) {
+                printf("Attribute %i - key: %i; value: %s\n", i, key[i], value[i].c_str());
                 NANODBC_CALL_RC(
                     SQLSetConnectAttr,
                     rc,
