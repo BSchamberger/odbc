@@ -327,7 +327,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_odbc_list_drivers_", (DL_FUNC) &_odbc_list_drivers_, 0},
     {"_odbc_list_data_sources_", (DL_FUNC) &_odbc_list_data_sources_, 0},
-    {"_odbc_odbc_connect", (DL_FUNC) &_odbc_odbc_connect, 6},
+    {"_odbc_odbc_connect", (DL_FUNC) &_odbc_odbc_connect, 8},
     {"_odbc_connection_info", (DL_FUNC) &_odbc_connection_info, 1},
     {"_odbc_connection_quote", (DL_FUNC) &_odbc_connection_quote, 1},
     {"_odbc_connection_release", (DL_FUNC) &_odbc_connection_release, 1},
