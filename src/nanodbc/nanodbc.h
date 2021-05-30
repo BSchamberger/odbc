@@ -1051,8 +1051,8 @@ public:
     void connect(
         const string_type& connection_string,
         long timeout = 0,
-        const std::vector< int >& key = std::vector < int >(0),
-        const std::vector< string_type>& value = std::vector< string_type >(0),
+        const std::vector< int >& key = {},
+        const std::vector< string_type>& value = {},
         const string_type& encoding = nullptr);
 
     /// [TODO:] Documentation
