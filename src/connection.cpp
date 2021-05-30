@@ -53,8 +53,8 @@ connection_ptr odbc_connect(
     std::string const& encoding = "",
     int bigint = 0,
     long timeout = 0,
-    std::vector< int > const& attrs_before_key = {};,
-    std::vector< std::string > const& attrs_before_value = {};) {
+    std::vector< int > const& attrs_before_key = {},
+    std::vector< std::string > const& attrs_before_value = {}) {
   return connection_ptr(
       new std::shared_ptr<odbc_connection>(new odbc_connection(
           connection_string,
