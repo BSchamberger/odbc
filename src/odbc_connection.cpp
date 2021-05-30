@@ -120,4 +120,7 @@ bigint_map_t odbc_connection::get_bigint_mapping() const {
   return bigint_mapping_;
 }
 
+std::vector< int > odbc_connection::attrs_before_key() const { return attrs_before_key_; }
+std::vector< std::string > odbc_connection::attrs_before_value() const { return attrs_before_value_; }
+
 } // namespace odbc
