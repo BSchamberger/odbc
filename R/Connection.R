@@ -38,6 +38,14 @@ OdbcConnection <- function(
     timeout <- 0
   }
 
+  if (!is.null(attrs_before)) {
+    attrs_before_key   <- as.integer(attrs_before["key"])
+    attrs_before_value <- as.integer(attrs_before["value"])
+  } else {
+    attrs_before_key   <- integer(0L)
+    attrs_before_value <- character(0L)
+  }
+
   ptr <- odbc_connect(
     connection_string,
     timezone = timezone,
